@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jsPsych/jspsych.js"></script>
+    <script src="jsPsych/plugins/jspsych-image-button-response.js"></script>
+	<script src="jsPsych/plugins/jspsych-instructions.js"></script>
+	<script src="jsPsych/plugins/jspsych-max-keyboard.js"></script>
+	<script src="jsPsych/plugins/jspsych-fishing.js"></script>
+    <link rel="stylesheet" href="jsPsych/css/jspsych.css"></link>
+    <style>
+      img { width: 300px; }
+    </style>
+  </head>
+  <body></body>
+  <script>
+	  var trial_1 = {
+	    type: 'instructions',
+	    pages: ['Welcome to the experiment. Click next to begin.'],
+	    show_clickable_nav: true,
+	    show_page_number: true
+	  }
+	  
+	  var max_tapping = {
+		  type: 'max_keyboard',
+		  stimulus: 'img/fisherman.jpg',
+		  choices: ['f'],
+		  prompt: '<p>Type keyboard f as fast as you can</p>',
+		  trial_duration: 5000,
+		  response_ends_trial: false
+	  }
+	  
+	  var trial_2 = {
+	    type: 'instructions',
+	    pages: ['ready to fish?'],
+	    show_clickable_nav: true,
+	    show_page_number: true
+	  }
+	  
+	  var fishing = {
+		  type: 'fishing',
+		  stimulus: 'img/fisherman.jpg',
+		  prompt: '<p>Fish!</p>',
+		  trial_duration: 2000,
+		  choices: ['f'],
+		  stimulus_duration: 1000,
+		  response_ends_trial: false,
+		  show_stim_with_feedback: true,
+		  feedback_duration: 1000,
+		  fished_answer: ['f'],
+		  fished_feedback: 'img/fisherman_feedback.jpg'
+	  }
+	  
+	  var timeline = [];
+	  timeline.push(trial_1)
+	  timeline.push(max_tapping)
+	  timeline.push(trial_2)
+	  timeline.push(fishing)
+	  jsPsych.init({
+	    timeline: timeline,
+	    on_finish: function(){jsPsych.data.displayData();}
+	  });
+
+	  </script>
+</html>
