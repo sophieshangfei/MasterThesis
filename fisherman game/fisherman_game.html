@@ -5,7 +5,7 @@
     <script src="jsPsych/plugins/jspsych-image-button-response.js"></script>
 	<script src="jsPsych/plugins/jspsych-instructions.js"></script>
 	<script src="jsPsych/plugins/jspsych-max-keyboard.js"></script>
-	<script src="jsPsych/plugins/jspsych-fishing.js"></script>
+	<script src="jsPsych/plugins/jspsych-fishings.js"></script>
     <link rel="stylesheet" href="jsPsych/css/jspsych.css"></link>
     <style>
       img { width: 300px; }
@@ -37,23 +37,25 @@
 	  }
 	  
 	  var fishing = {
-		  type: 'fishing',
-		  stimulus: 'img/fisherman.jpg',
+		  type: 'fishings',
+		  stimulus: 'img/fish.jpg',
 		  prompt: '<p>Fish!</p>',
-		  trial_duration: 2000,
-		  choices: ['f'],
-		  stimulus_duration: 1000,
-		  response_ends_trial: false,
+		  trial_duration: 200000,
+		  choices: [70],
+		  key_answer: 70,
 		  show_stim_with_feedback: true,
-		  feedback_duration: 1000,
-		  fished_answer: ['f'],
-		  fished_feedback: 'img/fisherman_feedback.jpg'
+		  feedback_duration: 100,
+		  fished_feedback: 'img/fisherman_feedback.png',
+		  unfished_feedback: 'img/fisherman.jpg',
+		  background: 'url(img/background.png)',
+		  background_spec_repeat: 'no-repeat',
+		  background_spec_position: 'center center'
 	  }
 	  
 	  var timeline = [];
 	  timeline.push(trial_1)
-	  timeline.push(max_tapping)
-	  timeline.push(trial_2)
+// 	  timeline.push(max_tapping)
+// 	  timeline.push(trial_2)
 	  timeline.push(fishing)
 	  jsPsych.init({
 	    timeline: timeline,

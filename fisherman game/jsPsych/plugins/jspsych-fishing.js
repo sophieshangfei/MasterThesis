@@ -13,24 +13,22 @@ jsPsych.plugins['fishing'] = (function(){
 		  array: true,
           description: 'The images to be displayed'
         },
+        key_answer: {
+          type: jsPsych.plugins.parameterType.KEYCODE,
+          pretty_name: 'Key answer',
+          default: undefined,
+          description: 'The key to indicate the correct response.'
+        },
         choices: {
           type: jsPsych.plugins.parameterType.KEYCODE,
           pretty_name: 'Choices',
           default: jsPsych.ALL_KEYS,
           description: 'The keys the subject is allowed to press to respond to the stimulus.'
         },
-        fished_answer: {
-          type: jsPsych.plugins.parameterType.KEYCODE,
-          pretty_name: 'fished answer',
-          default: undefined,
-		  array: true,
-          description: 'The key to indicate if subjects have fished.'
-        },
         fished_feedback: {
-          type: jsPsych.plugins.parameterType.IMAGE,
+          type: jsPsych.plugins.parameterType.STRING,
           pretty_name: 'fished feedback',
-          default: undefined,
-		  array: true,
+          default: "<p class='feedback'>Incorrect</p>",
           description: 'Image to show when the subject fished'
         },
         prompt: {
@@ -57,12 +55,6 @@ jsPsych.plugins['fishing'] = (function(){
           default: null,
           description: 'How long to show trial before it ends.'
         },
-        response_ends_trial: {
-          type: jsPsych.plugins.parameterType.BOOL,
-          pretty_name: 'Response ends trial',
-          default: true,
-          description: 'If true, trial will end when subject makes a response.'
-        },
         feedback_duration: {
           type: jsPsych.plugins.parameterType.INT,
           pretty_name: 'Feedback duration',
@@ -73,51 +65,80 @@ jsPsych.plugins['fishing'] = (function(){
   }
 
   plugin.trial = function(display_element, trial) {
-
-      var new_html = '<img src="'+trial.stimulus+'" id="jspsych-fishing"></img>';
-
-      // add prompt
-      if(trial.prompt !== null){
+	  
+	  display_element.innerHTML = '<img id="jspsych-fishing" class="jspsych-fishing" src="'+trial.stimulus+'"></img>';
+      
+      // if prompt is set, show prompt
+      if (trial.prompt !== null) {
         new_html += trial.prompt;
       }
-
+	  
+	  
       // draw
-      display_element.innerHTML = new_html;
+	  display_element.innerHTML = new_html;
 
       // store response
       var responses = [];
-	  
-	  // feedback function
-	  var feedback_image;
-      function doFeedback(correct) {
-		  if (trial.show_stim_with_feedback && correct) {
-			  console.log('a')
-			  feedback_image += '<img src="'+trial.fished_feedback+'" id="jspsych-fishing"></img>';
-			  return feedback_image;
-		  }
-	  };
-	  
-	  // feedback
-	  var correct = true;
-	  if (trial.fished_answer == info.key) {
-		  correct = true;
-	}
-	doFeedback(correct);
 	
  
       // function to handle responses by the subject
       var after_response = function(info) {
+		  var correct = false;
+		  if (trial.key_answer == info.key) {
+			  correct = true;
+		  }
+		  
 		  responses.push({
 		          key_press: info.key,
-		          rt: info.rt
+		          rt: info.rt,
+			  correct: correct
 		        });
-		display_element.innerHTML = feedback_image
+				
+		display_element.innerHTML = '';
+		
+		doFeedback(correct);
+		
 				
         // after a valid response, the stimulus will have the CSS class 'responded'
         // which can be used to provide visual feedback that a response was recorded
         display_element.querySelector('#jspsych-fishing').className += 'responded';
-      };
+      }
 	  
+      jsPsych.pluginAPI.getKeyboardResponse({
+        callback_function: after_response,
+        valid_responses: trial.choices,
+        rt_method: 'performance',
+        persist: false,
+        allow_held_key: false
+      });
+	  
+      function doFeedback(correct) {
+
+          // show image during feedback if flag is set
+          if (trial.show_stim_with_feedback) {
+            display_element.innerHTML = '<img id="jspsych-categorize-image-stimulus" class="jspsych-categorize-image-stimulus" src="'+trial.stimulus+'"></img>';
+          }
+
+          // show the feedback
+          display_element.innerHTML += atext;
+        }
+	  
+	  
+        jsPsych.pluginAPI.getKeyboardResponse({
+          callback_function: after_forced_response,
+          valid_responses: [trial.key_answer],
+          rt_method: 'performance',
+          persist: true,
+          allow_held_key: false
+        });
+
+      } else {
+        jsPsych.pluginAPI.setTimeout(function() {
+          endTrial();
+        }, trial.feedback_duration);
+      }
+
+
       // function to end trial when it is time
       var end_trial = function() {
 
