@@ -45,12 +45,6 @@ jsPsych.plugins['fishings'] = (function(){
           default: undefined,
           description: 'The key to indicate the correct response.'
         },
-        unfished_feedback: {
-  		type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'unfished feedback',
-          default: undefined,
-          description: 'The image content to be displayed.'
-        },
   	  fished_feedback: {
   		type: jsPsych.plugins.parameterType.IMAGE,
           pretty_name: 'feedback',
@@ -63,7 +57,7 @@ jsPsych.plugins['fishings'] = (function(){
           default: null,
           description: 'Any content here will be displayed below the stimulus.'
         },
-        stimulus_duration: {
+		stimulus_duration: {
           type: jsPsych.plugins.parameterType.INT,
           pretty_name: 'Stimulus duration',
           default: null,
@@ -92,47 +86,53 @@ jsPsych.plugins['fishings'] = (function(){
           pretty_name: 'Feedback duration',
           default: 2000,
           description: 'How long to show feedback.'
-        }
+        },
+		price: {
+          type: jsPsych.plugins.parameterType.STRING,
+          pretty_name: 'Price of fish to be displayed',
+          default: null,
+          description: 'Price of fish to be displayed'
+		}
     
     }
   }
 
   plugin.trial = function(display_element, trial) {
-
-      var new_html = '<img src="'+trial.stimulus+'" id="jspsych-fishings"></img>';
+	  
+	  var new_html = '<img style="position:absolute; top:380px; left:765px;" src="'+trial.stimulus+'" id="jspsych-fishings"></img>';
 
       // add prompt
       if(trial.prompt !== null){
         new_html += trial.prompt;
       }
+	  
+	  new_html += trial.price;
 
-      // draw
       display_element.innerHTML = new_html;
 
       // store response
       var responses = [];
 	  
-	  
-	  // // set background
+	  // // set background and price
 	  var backgroundImage = trial.background;
 	  var backgroundRepeat = trial.background_spec_repeat;
 	  var backgroundPosition = trial.background_spec_position;
+	  var price = trial.price;
 	  // //--------Set up Canvas begin-------
 	  var canvas = document.createElement("canvas");
-	  display_element.appendChild(canvas);
+	  var ctx = canvas.getContext("2d");
+	  // display_element.appendChild(canvas);
 	  var body = document.getElementsByClassName("jspsych-display-element")[0];
 	  body.style.backgroundImage = backgroundImage;
 	  body.style.backgroundRepeat = backgroundRepeat;
 	  body.style.backgroundPosition = backgroundPosition;
+
 	  // //Set the canvas background color
 	  canvas.style.backgroundImage = backgroundImage;
-	  canvas.style.backgroundRepeat = backgroundRepeat;
-	  canvas.style.backgroundPosition = backgroundPosition;
-	  
+ 	  canvas.style.backgroundRepeat = backgroundRepeat;
+ 	  canvas.style.backgroundPosition = backgroundPosition;
 		//--------Set up Canvas end-------
 		
-	
-	  
 
       // function to end trial when it is time
       var end_trial = function() {
@@ -167,15 +167,14 @@ jsPsych.plugins['fishings'] = (function(){
 		        });
 	
 	  var correct;
-	  var incorrect;
+	  
       if (trial.key_answer == info.key) {
         correct = true;
-      } else {
-		  incorrect = false;
       }
-
+      
       // var timeout = info.rt == null;
 	  doFeedback(correct);
+	  
 
         // after a valid response, the stimulus will have the CSS class 'responded'
         // which can be used to provide visual feedback that a response was recorded
@@ -184,22 +183,14 @@ jsPsych.plugins['fishings'] = (function(){
         
       };
 	  
-      function doFeedback(correct, incorrect) {
-		  var display_feedback;
-
+      function doFeedback(correct) {
           if (trial.show_stim_with_feedback) {
   			if (correct) {
-  				display_feedback = '<img id="jspsych-fishings" class="jspsych-fishings" src="'+trial.fished_feedback+'"></img>';
+  				display_element.innerHTML += '<img style="position:absolute; top:380px; left:765px;" id="jspsych-fishings" class="jspsych-fishings" src="'+trial.fished_feedback+'"></img>';
   			}
-			if (incorrect) {
-				console.log('a')
-  				display_feedback = '<img id="jspsych-fishings" class="jspsych-fishings" src="'+unfished_feedback+'"></img>';
-  			}
-        } 
-		
-		display_element.innerHTML += display_feedback;
-
+        }
       }
+	  
 
       // start the response listener
       if (trial.choices != jsPsych.NO_KEYS) {
@@ -207,24 +198,25 @@ jsPsych.plugins['fishings'] = (function(){
           callback_function: after_response,
           valid_responses: trial.choices,
           rt_method: 'performance',
-          persist: true,
+          persist: false,
           allow_held_key: false
         });
       }
 
-      // hide stimulus if stimulus_duration is set
-      if (trial.stimulus_duration !== null) {
-        jsPsych.pluginAPI.setTimeout(function() {
-          display_element.querySelector('#jspsych-fishings').style.visibility = 'hidden';
-        }, trial.stimulus_duration);
-      }
-
-      // end trial if trial_duration is set
-      if (trial.trial_duration !== null) {
-        jsPsych.pluginAPI.setTimeout(function() {
-          end_trial();
-        }, trial.trial_duration);
-      }
+      // // hide stimulus if stimulus_duration is set
+      // // update price based on price duration
+      // if (trial.stimulus_duration !== null) {
+      //   jsPsych.pluginAPI.setTimeout(function() {
+      //     display_element.querySelector('#jspsych-fishings').style.visibility = 'hidden';
+      //   }, trial.stimulus_duration);
+      // }
+      //
+      // // end trial if trial_duration is set
+      // if (trial.trial_duration !== null) {
+      //   jsPsych.pluginAPI.setTimeout(function() {
+      //     end_trial();
+      //   }, trial.trial_duration);
+      // }
 
     };
 

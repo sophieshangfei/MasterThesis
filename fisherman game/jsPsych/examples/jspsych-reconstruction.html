@@ -11,9 +11,7 @@
 
   var sample_function = function(param){
     var size = 50 + Math.floor(param*250);
-    var html = '<div style="display: block; margin: auto; height: 300px; width: 300px; position: relative;">'+
-      '<div style="display: block; position: absolute; top: '+(150 - size/2)+'px; left:'+(150 - size/2)+'px; background-color: #000000; '+
-      'width: '+size+'px; height: '+size+'px;"></div></div><p>Press H to make the square larger. Press G to make the square smaller.</p>'+
+    var html = '<img src="img/blue.png" height: >'+size+'px; width: '+size+'px; '+'<p>Press H to make the square larger. Press G to make the square smaller.</p>'+
       '<p>When the square is the same size as the previous one, click Next.</p>';
     return html;
   }
@@ -31,7 +29,7 @@
   var test = {
     type: 'reconstruction',
     stim_function: sample_function,
-    starting_value: 0.5,
+    starting_value: 0.1,
   }
 
   jsPsych.init({

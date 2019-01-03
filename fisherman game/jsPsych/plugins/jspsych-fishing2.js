@@ -91,7 +91,7 @@ jsPsych.plugins['fishing2'] = (function(){
 		// //--------Set up Canvas end------- // //
 
 		// add stimulus
-		var new_html = '<img style="position:absolute; top:380px; left:765px;" src="'+trial.stimulus+'" id="jspsych-fishing"></img>';
+		var new_html = '<img style="position:absolute; top:380px; left:765px;" src="'+trial.stimulus+'" id="jspsych-fishing2"></img>';
 		// add prompt
 		if(trial.prompt !== null){
 			new_html += trial.prompt;
@@ -140,16 +140,24 @@ jsPsych.plugins['fishing2'] = (function(){
 
     function doFeedback(correct) {
       if (trial.show_stim_with_feedback && correct){
-      	display_element.innerHTML = '<img id="jspsych-fishing" class="jspsych-fishing" src="'+trial.fished_feedback+'"></img>';
+      	display_element.innerHTML = '<img id="jspsych-fishing2" class="jspsych-fishing2" src="'+trial.fished_feedback+'"></img>';
         }
       }
+      
+    jsPsych.pluginAPI.getKeyboardResponse({
+          callback_function: after_response,
+          valid_responses: [trial.key_answer],
+          rt_method: 'performance',
+          persist: false,
+          allow_held_key: false
+        });
 
     function endTrial() {
       display_element.innerHTML = '';
       jsPsych.finishTrial(trial_data);
     }
 
-};
+  };
 
 	return plugin;
 })();

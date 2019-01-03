@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../jspsych.js"></script>
+    <script src="../plugins/jspsych-html-keyboard-response.js"></script>
+	<script src="../plugins/jspsych-fishings.js"></script>
+	<script src="../plugins/jspsych-categorize-image.js"></script>
+	<script src="../plugins/jspsych-fishing-looping.js"></script>
+	<script src="../plugins/jspsych-call-function.js"></script>
+    <link rel="stylesheet" href="../css/jspsych.css"></link>
+	<style>
+	    html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+	    #jspsych-target { width: 100%; height: 100%;}
+	    #srt-score { position: absolute; width: 100%; border-bottom: 1px solid #ddd; background-color: #fafafa; margin:0; text-align: center; display: none;}
+	    #srt-score progress { width: 500px; }
+	    #srt-score .srt-top { padding: 10px 75px; display: inline-block; font-family: 'Open Sans', 'Arial'; font-size: 16px; color: #333;}
+	  </style>
+  </head>
+  <body>
+      <div id="srt-score">
+        <span class="srt-top">Correct responses: <span id="srt-correct-count">0</span></span>
+        <span class="srt-top">Time: <progress max="100" value="0" id="srt-timer"></progress></span>
+      </div>
+      <div id="jspsych-target">
+      </div>
+  </body>
+  <script>
+	  
+	  var block_length = 10000;
+	  var block_start_time;
+	  var n_blocks = 2;
+    var timeline = [];
+
+  var fishing = {
+	  type: 'fishing-looping',
+	  stimulus: 'img/fish.png',
+	  price: "1.04",
+	  prompt: '<p>Fish!</p>',
+	  choices: [70, 70],
+	  key_answer: 70,
+	  show_stim_with_feedback: true,
+	  fished_feedback: 'img/fisherman_feedback.png',
+	  background: 'url(img/background.png)',
+	  background_spec_repeat: 'no-repeat',
+	  background_spec_position: 'center center'
+  }
+  var price = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  var show_timer = {
+    type: 'call-function',
+    func: function(){
+      document.querySelector('#srt-score').style.display = 'block';
+    }
+  }
+  timeline.push(show_timer);
+  var p = 0;
+  for(var i=0; i<n_blocks; i++){
+
+      var timer_start = {
+        type: 'call-function',
+        func: function(){
+          console.log(price[p])
+          document.querySelector('#srt-correct-count').innerHTML = price[p];
+          console.log(price[i])
+		    var d = new Date();
+		    block_start_time = d.getTime();
+			timer_ticks = setInterval(function(){
+            var diff = Date.now() - block_start_time;
+            var ratio = diff / block_length * 100;
+            //console.log(Math.floor(ratio));
+            var proportion_time_elapsed = Math.floor(ratio);
+            //console.log(proportion_time_elapsed);
+            document.querySelector('#srt-timer').value = proportion_time_elapsed;
+          }, 100)
+        }
+      }
+  var loop_node = {
+	  data:{block: i},
+    timeline: [fishing],
+    loop_function: function(data){
+      if(Date.now() - block_start_time < block_length){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+  //console.log(i)
+  timeline.push(timer_start, loop_node);
+}
+
+
+ 
+  jsPsych.init({
+    display_element: 'jspsych-target',
+	  timeline: timeline,//, pre_if_trial, if_node, after_if_trial],
+    //on_finish: function(){ jsPsych.data.displayData(); },
+    default_iti: 0
+  });
+
+  </script>
+</html>
