@@ -61,22 +61,22 @@
 	  }
 	  timeline.push(trial_2);
 	  
-	  // load json file
-	  var fishprice = (function() {
-			var json = null;
-			$.ajax({
-				'async': false,
-				'global': false,
-				'url': "condition_stimuli.json",
-				'dataType': "json",
-				'success': function (data) {
-					json = data;
-				}
-			});
-			return json
-
-		})();
-		// console.log(fishprice[Object.keys(fishprice)[1]]);
+		// 	  // load json file
+		// 	  var fishprice = (function() {
+		// 	var json = null;
+		// 	$.ajax({
+		// 		'async': false,
+		// 		'global': false,
+		// 		'url': "condition_stimuli.json",
+		// 		'dataType': "json",
+		// 		'success': function (data) {
+		// 			json = data;
+		// 		}
+		// 	});
+		// 	return json
+		//
+		// })();
+		// // console.log(fishprice[Object.keys(fishprice)[1]]);
 
 
 	  var fishing = {
@@ -93,7 +93,7 @@
 	  background_spec_position: 'center center'
   }
   
-  var price = [1, 2, 3, 4, 5, 6, 7, 8];
+  var price = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   var show_timer = {
     type: 'call-function',
     func: function(){
@@ -101,15 +101,15 @@
     }
   }
   timeline.push(show_timer);
-  var p = 0;
+  var t = 0;
   for(var i=0; i<n_blocks; i++){
-
       var timer_start = {
         type: 'call-function',
         func: function(){
-          console.log(price[p])
-          document.querySelector('#srt-correct-count').innerHTML = price[p];
-          console.log(price[i])
+			var p = price[t];
+			t = t + 1;
+          document.querySelector('#srt-correct-count').innerHTML = p;
+          console.log(p)
 		    var d = new Date();
 		    block_start_time = d.getTime();
 			timer_ticks = setInterval(function(){
