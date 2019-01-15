@@ -109,23 +109,24 @@ jsPsych.plugins['fishing-looping'] = (function() {
     // //--------Set up Canvas begin-------
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
-    // display_element.appendChild(canvas);
+    //display_element.appendChild(canvas);
     var body = document.getElementsByClassName("jspsych-display-element")[0];
     body.style.backgroundImage = backgroundImage;
     body.style.backgroundRepeat = backgroundRepeat;
     body.style.backgroundPosition = backgroundPosition;
-	//body.style.backgroundSize = "500px 500px";
+	body.style.backgroundSize = "1500px 1500px";
 
     // //Set the canvas background color
     canvas.style.backgroundImage = backgroundImage;
     canvas.style.backgroundRepeat = backgroundRepeat;
     canvas.style.backgroundPosition = backgroundPosition;
-	//canvas.style.backgroundSize = "500px 500px";
+	canvas.style.backgroundSize = "1500px 1500px";
     //--------Set up Canvas end-------
-    display_element.innerHTML = '<img id="jspsych-fishing" style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300" class="jspsych-fishing" src="'+trial.stimulus+'"></img>';
-
-
-    // if prompt is set, show prompt
+    
+	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
+	// style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300"
+    
+	// if prompt is set, show prompt
     if (trial.prompt !== null) {
       display_element.innerHTML += trial.prompt;
     }
@@ -161,6 +162,8 @@ jsPsych.plugins['fishing-looping'] = (function() {
       doFeedback(correct);
     }
 
+
+
     jsPsych.pluginAPI.getKeyboardResponse({
       callback_function: after_response,
       valid_responses: trial.choices,
@@ -178,34 +181,35 @@ jsPsych.plugins['fishing-looping'] = (function() {
       }, trial.trial_duration);
     }
 
+
+
     function doFeedback(correct) {
 
         if (trial.show_stim_with_feedback) {
-          display_element.innerHTML = '<img id="jspsych-fishing-looping" position = "absolute" top = "850px" right = "450px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
+          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
         }
+		
 
       if (trial.force_correct_button_press && correct === false && ((timeout && trial.show_feedback_on_timeout) || !timeout)) {
+        	var after_forced_response = function(info) {
+          	  endTrial();
+        	}
 
-        var after_forced_response = function(info) {
-          endTrial();
-        }
-
-        jsPsych.pluginAPI.getKeyboardResponse({
-          callback_function: after_forced_response,
-          valid_responses: [trial.key_answer],
-          rt_method: 'performance',
-          persist: false,
-          allow_held_key: false
-        });
-
-      } else {
-        jsPsych.pluginAPI.setTimeout(function() {
-          endTrial();
-        }, trial.feedback_duration);
-      }
-
+        	jsPsych.pluginAPI.getKeyboardResponse({
+          	  callback_function: after_forced_response,
+          	  valid_responses: [trial.key_answer],
+          	  rt_method: 'performance',
+          	  persist: false,
+          	  allow_held_key: false
+        	});
+		} else {
+        	jsPsych.pluginAPI.setTimeout(function() {
+          	  endTrial();
+        	}, trial.feedback_duration);
+      	}
     }
-    function endTrial() {
+    
+	function endTrial() {
       display_element.innerHTML = '';
       jsPsych.finishTrial(trial_data);
     }

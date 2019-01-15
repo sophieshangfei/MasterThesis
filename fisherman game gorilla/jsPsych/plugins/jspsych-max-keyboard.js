@@ -1,17 +1,16 @@
 jsPsych.plugins['max_keyboard'] = (function(){
 
   var plugin = {};
-
+  
   plugin.info = {
       name: 'max-keyboard',
       description: '',
       parameters: {
-        stimulus: {
-          type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'Stimulus',
+        key_answer: {
+          type: jsPsych.plugins.parameterType.KEYCODE,
+          pretty_name: 'Key answer',
           default: undefined,
-		  array: true,
-          description: 'The images to be displayed'
+          description: 'The key to indicate the correct response.'
         },
         choices: {
           type: jsPsych.plugins.parameterType.KEYCODE,
@@ -26,111 +25,157 @@ jsPsych.plugins['max_keyboard'] = (function(){
           default: null,
           description: 'Any content here will be displayed below the stimulus.'
         },
-        stimulus_duration: {
-          type: jsPsych.plugins.parameterType.INT,
-          pretty_name: 'Stimulus duration',
-          default: null,
-          description: 'How long to hide the stimulus.'
-        },
         trial_duration: {
           type: jsPsych.plugins.parameterType.INT,
           pretty_name: 'Trial duration',
           default: null,
           description: 'How long to show trial before it ends.'
         },
-        response_ends_trial: {
-          type: jsPsych.plugins.parameterType.BOOL,
-          pretty_name: 'Response ends trial',
-          default: true,
-          description: 'If true, trial will end when subject makes a response.'
+        feedback_duration: {
+          type: jsPsych.plugins.parameterType.INT,
+          pretty_name: 'Feedback duration',
+          default: 100,
+          description: 'How long to show feedback.'
         },
-    
+        force_correct_button_press: {
+          type: jsPsych.plugins.parameterType.BOOL,
+          pretty_name: 'Force correct button press',
+          default: false,
+          description: 'If set to true, then the subject must press the correct response key after feedback in order to advance to next trial.'
+        },
+        show_feedback_on_timeout: {
+          type: jsPsych.plugins.parameterType.BOOL,
+          pretty_name: 'Show feedback on timeout',
+          default: false,
+          description: 'If true, stimulus will be shown during feedback. If false, only the text feedback will be displayed during feedback.'
+        },
+        background: {
+            type: jsPsych.plugins.parameterType.IMAGE,
+            pretty_name: 'background image',
+            default: undefined,
+            description: 'The images to be displayed.'
+          },
+          background_spec_repeat: {
+            type: jsPsych.plugins.parameterType.IMAGE,
+            pretty_name: 'background image specification',
+            default: undefined,
+            description: 'The images to be displayed.'
+          },
+          background_spec_position: {
+            type: jsPsych.plugins.parameterType.IMAGE,
+            pretty_name: 'background image specification',
+            default: undefined,
+            description: 'The images to be displayed.'
+          }
     }
   }
 
   plugin.trial = function(display_element, trial) {
 
-      var new_html = '<img src="'+trial.stimulus+'" id="jspsych-max-keyboard" width="300" height="300"></img>';
+      // var new_html = '<img src="'+trial.stimulus+'" id="jspsych-max-keyboard" width="100" height="100"></img>';
+	  
+      // // set background and price
+      var backgroundImage = trial.background;
+      var backgroundRepeat = trial.background_spec_repeat;
+      var backgroundPosition = trial.background_spec_position;
+      // //--------Set up Canvas begin-------
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+      //display_element.appendChild(canvas);
+      var body = document.getElementsByClassName("jspsych-display-element")[0];
+      body.style.backgroundImage = backgroundImage;
+      body.style.backgroundRepeat = backgroundRepeat;
+      body.style.backgroundPosition = backgroundPosition;
 
-      // add prompt
-      if(trial.prompt !== null){
-        new_html += trial.prompt;
-      }
+      // //Set the canvas background color
+      canvas.style.backgroundImage = backgroundImage;
+      canvas.style.backgroundRepeat = backgroundRepeat;
+      canvas.style.backgroundPosition = backgroundPosition;
+      //--------Set up Canvas end-------
+	  
+	  
+      var trial_data = {};
 
-      // draw
-      display_element.innerHTML = new_html;
-
-      // store response
-      var responses = [];
-
-      // function to end trial when it is time
-      var end_trial = function() {
+      // create response function
+      var after_response = function(info) {
 
         // kill any remaining setTimeout handlers
         jsPsych.pluginAPI.clearAllTimeouts();
 
-        // kill keyboard listeners
-        if (typeof keyboardListener !== 'undefined') {
-          jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+        // clear keyboard listener
+        jsPsych.pluginAPI.cancelAllKeyboardResponses();
+
+        var correct = false;
+        if (trial.key_answer == info.key) {
+          correct = true;
         }
 
-        // gather the data to store for the trial
-        var trial_data = {
-          "rt": responses.rt,
+        // save data
+        trial_data = {
+          "rt": info.rt,
+          "correct": correct,
           "stimulus": trial.stimulus,
-          "responses": JSON.stringify(responses)
+          "key_press": info.key
         };
 
-        // clear the display
         display_element.innerHTML = '';
 
-        // move on to the next trial
-        jsPsych.finishTrial(trial_data);
-      };
-
-      // function to handle responses by the subject
-      var after_response = function(info) {
-		  responses.push({
-		          key_press: info.key,
-		          rt: info.rt
-		        });
-		  
-
-        // after a valid response, the stimulus will have the CSS class 'responded'
-        // which can be used to provide visual feedback that a response was recorded
-        display_element.querySelector('#jspsych-max-keyboard').className += ' responded';
-
-        
-      };
-
-      // start the response listener
-      if (trial.choices != jsPsych.NO_KEYS) {
-        var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-          callback_function: after_response,
-          valid_responses: trial.choices,
-          rt_method: 'performance',
-          persist: true,
-          allow_held_key: false
-        });
+        doFeedback(correct);
       }
+	  
+      jsPsych.pluginAPI.getKeyboardResponse({
+        callback_function: after_response,
+        valid_responses: trial.choices,
+        rt_method: 'performance',
+        persist: false,
+        allow_held_key: false
+      });
 
-      // hide stimulus if stimulus_duration is set
-      if (trial.stimulus_duration !== null) {
-        jsPsych.pluginAPI.setTimeout(function() {
-          display_element.querySelector('#jspsych-max-keyboard').style.visibility = 'hidden';
-        }, trial.stimulus_duration);
-      }
-
-      // end trial if trial_duration is set
       if (trial.trial_duration !== null) {
         jsPsych.pluginAPI.setTimeout(function() {
-          end_trial();
+          after_response({
+            key: null,
+            rt: null
+          });
         }, trial.trial_duration);
+      }
+	  
+	  //console.log(tap);
+
+      function doFeedback(correct) {
+		
+  		if (correct) {
+  			tap = tap + 1;
+  			console.log (tap);
+  			display_element.innerHTML = '<p id="jspsych-max-keyboard">' + tap + '</p>'
+			console.log("kay");
+  		}
+
+        if (trial.force_correct_button_press && correct === false && ((timeout && trial.show_feedback_on_timeout) || !timeout)) {
+          	var after_forced_response = function(info) {
+            	  endTrial();
+          	}
+
+          	jsPsych.pluginAPI.getKeyboardResponse({
+            	  callback_function: after_forced_response,
+            	  valid_responses: [trial.key_answer],
+            	  rt_method: 'performance',
+            	  persist: false,
+            	  allow_held_key: false
+          	});
+  		} else {
+          	jsPsych.pluginAPI.setTimeout(function() {
+            	  endTrial();
+          	}, trial.feedback_duration);
+        	}
+      }
+    
+  	function endTrial() {
+        display_element.innerHTML = '';
+        jsPsych.finishTrial(trial_data);
       }
 
     };
 
-
-	return plugin;
-
+    return plugin;
 })();

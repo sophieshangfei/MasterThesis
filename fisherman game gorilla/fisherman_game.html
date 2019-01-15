@@ -8,6 +8,7 @@
 	<script src="jsPsych/plugins/jspsych-fishings.js"></script>
 	<script src="jsPsych/plugins/jspsych-call-function.js"></script>
 	<script src="jsPsych/plugins/jspsych-fishing-looping.js"></script>
+	<script src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
     <link rel="stylesheet" href="jsPsych/css/jspsych.css"></link>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css">
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -34,6 +35,8 @@
   	var n_blocks = 12;
   	var timer_ticks;
 	var timeline = [];
+	var tap = 0;
+	var tap_time = 5000;
 
 	  var trial_1 = {
 	    type: 'instructions',
@@ -42,16 +45,31 @@
 	    show_page_number: true
 	  }
 	  timeline.push(trial_1)
-	  
+	
+
 	  var max_tapping = {
-		  type: 'max_keyboard',
-		  stimulus: 'img/fisherman.jpg',
-		  choices: ['f'],
-		  prompt: '<p>Type keyboard f as fast as you can</p>',
-		  trial_duration: 5000,
-		  response_ends_trial: false
-	  }
-	  timeline.push(max_tapping);
+ 		  type: 'max_keyboard',
+ 		  stimulus: 'img/fisherman.jpg',
+ 		  key_answer: 70,
+ 		  choices: ['f'],
+ 		  background: 'url(img/tap.png)',
+ 		  background_spec_repeat: 'no-repeat',
+ 		  background_spec_position: 'center center'
+ 	  }
+
+ 	  var t = new Date();
+ 	  var start_tap = t.getTime();
+ 	  var tap_node = {
+ 	    timeline: [max_tapping],
+ 	    loop_function: function(data){
+ 	      if(Date.now() - start_tap < tap_time){
+ 	        return true;
+ 	      } else {
+ 	        return false;
+ 	      }
+ 	    }
+ 	  };
+ 	  timeline.push(tap_node);
 	  
 	  var trial_2 = {
 	    type: 'instructions',
@@ -61,24 +79,6 @@
 	  }
 	  timeline.push(trial_2);
 	  
-	  // load json file
-	  var fishprice = (function() {
-			var json = null;
-			$.ajax({
-				'async': false,
-				'global': false,
-				'url': "condition_stimuli.json",
-				'dataType': "json",
-				'success': function (data) {
-					json = data;
-				}
-			});
-			return json
-
-		})();
-		// console.log(fishprice[Object.keys(fishprice)[1]]);
-
-
 	  var fishing = {
 	  type: 'fishing-looping',
 	  stimulus: 'img/fish.png',
@@ -137,6 +137,24 @@
   //console.log(i)
   timeline.push(timer_start, loop_node);
 }
+	  // // load json file
+// 	  var fishprice = (function() {
+// 			var json = null;
+// 			$.ajax({
+// 				'async': false,
+// 				'global': false,
+// 				'url': "condition_stimuli.json",
+// 				'dataType': "json",
+// 				'success': function (data) {
+// 					json = data;
+// 				}
+// 			});
+// 			return json
+//
+// 		})();
+// 		// console.log(fishprice[Object.keys(fishprice)[1]]);
+//
+
 	  jsPsych.init({
 	  	display_element: 'jspsych-target',
 	    timeline: timeline,
