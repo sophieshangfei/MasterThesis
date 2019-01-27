@@ -7,31 +7,20 @@
 
  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
-/* create a cross for rod fixing */
-.cross {
-    text-align: center;
-    display: block;
-    font-family: sans-serif;
+/* Container holding the image and the text */
+.container {
+  position: relative;
 }
 
-/* create a price board */
-.blue_box, .green_box {
-    display: block;
-    clear:both;
-}
-.blue_box span {
-    background-color: blue;
-    color: white;
-    padding: 10px 5px;
-    display: block;
-    float: right;
-}
-.green_box span {
-    background-color: green;
-    color: white;
-    padding: 10px 5px;
-    display: block;
-    float: left;
+/* Bottom right text */
+.text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Container holding jsPsych content */

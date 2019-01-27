@@ -71,29 +71,29 @@ jsPsych.plugins['max_keyboard'] = (function(){
   }
 
   plugin.trial = function(display_element, trial) {
-
-      // var new_html = '<img src="'+trial.stimulus+'" id="jspsych-max-keyboard" width="100" height="100"></img>';
 	  
-      // // set background and price
+	  display_element.innerHTML = '';
+	  
+      // // set background
       var backgroundImage = trial.background;
       var backgroundRepeat = trial.background_spec_repeat;
-      var backgroundPosition = trial.background_spec_position;
+	  var backgroundPosition = trial.background_spec_position;
       // //--------Set up Canvas begin-------
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
-      //display_element.appendChild(canvas);
+      // display_element.appendChild(canvas);
       var body = document.getElementsByClassName("jspsych-display-element")[0];
       body.style.backgroundImage = backgroundImage;
       body.style.backgroundRepeat = backgroundRepeat;
-      body.style.backgroundPosition = backgroundPosition;
-
-      // //Set the canvas background color
+	  body.style.backgroundPosition = backgroundPosition;
+	 // //Set the canvas background image
       canvas.style.backgroundImage = backgroundImage;
       canvas.style.backgroundRepeat = backgroundRepeat;
-      canvas.style.backgroundPosition = backgroundPosition;
+	  canvas.style.backgroundPosition = backgroundPosition;
+	  body.style.backgroundSize = "700px 500px";
+	  canvas.style.backgroundSize = "700px 500px";
       //--------Set up Canvas end-------
-	  
-	  
+	  	  
       var trial_data = {};
 
       // create response function
@@ -118,7 +118,7 @@ jsPsych.plugins['max_keyboard'] = (function(){
           "key_press": info.key
         };
 
-        display_element.innerHTML = '';
+        
 
         doFeedback(correct);
       }
@@ -143,13 +143,14 @@ jsPsych.plugins['max_keyboard'] = (function(){
 	  //console.log(tap);
 
       function doFeedback(correct) {
-		
-  		if (correct) {
-  			tap = tap + 1;
-  			console.log (tap);
-  			display_element.innerHTML = '<p id="jspsych-max-keyboard">' + tap + '</p>'
-			console.log("kay");
-  		}
+
+			//   		if (correct) {
+			//   			tap = tap + 1;
+			//   			console.log (tap);
+			//   			display_element.innerHTML = '<p id="jspsych-max-keyboard">' + tap + '</p>'
+			// console.log("kay");
+			//   		}
+
 
         if (trial.force_correct_button_press && correct === false && ((timeout && trial.show_feedback_on_timeout) || !timeout)) {
           	var after_forced_response = function(info) {
@@ -171,7 +172,7 @@ jsPsych.plugins['max_keyboard'] = (function(){
       }
     
   	function endTrial() {
-        display_element.innerHTML = '';
+        //display_element.innerHTML = '';
         jsPsych.finishTrial(trial_data);
       }
 

@@ -2,22 +2,39 @@
 <html>
   <head>
     <script src="../jspsych.js"></script>
-    <script src="../plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="../plugins/jspsych-image-keyboard-response.js"></script>
     <link rel="stylesheet" href="../css/jspsych.css"></link>
   </head>
   <body></body>
   <script>
-
+	  var s = 0;
+	  var n_fix = 5;
+	  	var size = ['<img id="jspsych-image-keyboard-response-stimulus" style= "position: absolute; top: 370px; right: 460px; height: 80px; width: 80px" src="',
+	  '<img id="jspsych-image-keyboard-response-stimulus" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" src="',
+	  '<img id="jspsych-image-keyboard-response-stimulus" style= "position: absolute; top: 370px; right: 460px; height: 40px; width: 40px" src="',
+	  '<img id="jspsych-image-keyboard-response-stimulus" style= "position: absolute; top: 370px; right: 460px; height: 20px; width: 20px" src="',
+	  '<img id="jspsych-image-keyboard-response-stimulus" style= "position: absolute; top: 370px; right: 460px; height: 0px; width: 0px" src="'];
   var trial = {
-    type: 'html-keyboard-response',
-    stimulus: 'Hello. This is in a loop. Press R to repeat this trial, or C to continue.',
-    choices: ['r','c']
-  }
-
+    type: 'image-keyboard-response',
+    stimulus: 'img/blue.png',
+    choices: [39, 39],
+	  image_size: size[s],
+	  on_finish: function(data){
+		  if (data.key_press == 39){
+			  console.log("man")
+			  s = s + 1;
+			  return s;
+		  } else {
+			  n_fix = n_fix + 1;
+			  return n_fix;
+		  }
+	  }
+  };
   var loop_node = {
     timeline: [trial],
     loop_function: function(data){
-      if(jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == data.values()[0].key_press){
+		console.log(s);
+      if(s < n_fix){
         return true;
       } else {
         return false;
@@ -54,7 +71,7 @@
   }
 
   jsPsych.init({
-	  timeline: [loop_node, pre_if_trial, if_node, after_if_trial],
+	  timeline: [loop_node],//, pre_if_trial, if_node, after_if_trial],
     on_finish: function(){ jsPsych.data.displayData(); },
     default_iti: 200
   });

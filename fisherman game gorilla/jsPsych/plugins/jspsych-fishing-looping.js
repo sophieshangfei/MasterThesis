@@ -25,12 +25,6 @@ jsPsych.plugins['fishing-looping'] = (function() {
         array: true,
         description: 'The keys the subject is allowed to press to respond to the stimulus.'
       },
-          price: {
-          type: jsPsych.plugins.parameterType.STRING,
-          pretty_name: 'Price of fish to be displayed',
-          default: null,
-          description: 'Price of fish to be displayed'
-    },
           fished_feedback: {
       type: jsPsych.plugins.parameterType.IMAGE,
           pretty_name: 'feedback',
@@ -114,24 +108,22 @@ jsPsych.plugins['fishing-looping'] = (function() {
     body.style.backgroundImage = backgroundImage;
     body.style.backgroundRepeat = backgroundRepeat;
     body.style.backgroundPosition = backgroundPosition;
-	body.style.backgroundSize = "1500px 1500px";
+	body.style.backgroundSize = "700px 500px";
 
     // //Set the canvas background color
     canvas.style.backgroundImage = backgroundImage;
     canvas.style.backgroundRepeat = backgroundRepeat;
     canvas.style.backgroundPosition = backgroundPosition;
-	canvas.style.backgroundSize = "1500px 1500px";
+	canvas.style.backgroundSize = "700px 500px";
     //--------Set up Canvas end-------
     
-	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
+	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
 	// style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300"
     
 	// if prompt is set, show prompt
     if (trial.prompt !== null) {
       display_element.innerHTML += trial.prompt;
     }
-
-    display_element.innerHTML += trial.price;
 
     var trial_data = {};
 
@@ -186,7 +178,7 @@ jsPsych.plugins['fishing-looping'] = (function() {
     function doFeedback(correct) {
 
         if (trial.show_stim_with_feedback) {
-          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
+          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
         }
 		
 

@@ -79,6 +79,24 @@ jsPsych.plugins.instructions = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
+	  
+	  
+      // // set background and price
+      // var backgroundImage = trial.background;
+      // var backgroundRepeat = trial.background_spec_repeat;
+      // var backgroundPosition = trial.background_spec_position;
+      // var price = trial.price;
+      // //--------Set up Canvas begin-------
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+      //display_element.appendChild(canvas);
+      var body = document.getElementsByClassName("jspsych-display-element")[0];
+      body.style.backgroundImage = '';
+
+      // //Set the canvas background color
+      canvas.style.backgroundImage = '';
+      //--------Set up Canvas end-------
+	
 
     var current_page = 0;
 
