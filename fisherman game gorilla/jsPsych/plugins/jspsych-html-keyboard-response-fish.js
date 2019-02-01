@@ -1,19 +1,27 @@
+/**
+ * jspsych-html-keyboard-response
+ * Josh de Leeuw
+ *
+ * plugin for displaying a stimulus and getting a keyboard response
+ *
+ * documentation: docs.jspsych.org
+ *
+ **/
 
-jsPsych.plugins["rod-fixing"] = (function() {
+
+jsPsych.plugins["html-keyboard-response-fish"] = (function() {
 
   var plugin = {};
 
-  jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
-
   plugin.info = {
-    name: 'image-keyboard-response',
+    name: 'html-keyboard-response-fish',
     description: '',
     parameters: {
       stimulus: {
-        type: jsPsych.plugins.parameterType.IMAGE,
+        type: jsPsych.plugins.parameterType.HTML_STRING,
         pretty_name: 'Stimulus',
         default: undefined,
-        description: 'The image to be displayed'
+        description: 'The HTML string to be displayed'
       },
       choices: {
         type: jsPsych.plugins.parameterType.KEYCODE,
@@ -46,69 +54,29 @@ jsPsych.plugins["rod-fixing"] = (function() {
         default: true,
         description: 'If true, trial will end when subject makes a response.'
       },
-      background: {
-          type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'background image',
-          default: undefined,
-          description: 'The images to be displayed.'
-        },
-        background_spec_repeat: {
-          type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'background image specification',
-          default: undefined,
-          description: 'The images to be displayed.'
-        },
-        background_spec_position: {
-          type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'background image specification',
-          default: undefined,
-          description: 'The images to be displayed.'
-        }
+
     }
   }
 
   plugin.trial = function(display_element, trial) {
 	  
-      // // set background and price
-      var backgroundImage = trial.background;
-      var backgroundRepeat = trial.background_spec_repeat;
-      var backgroundPosition = trial.background_spec_position;
-      var price = trial.price;
       // //--------Set up Canvas begin-------
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
       //display_element.appendChild(canvas);
       var body = document.getElementsByClassName("jspsych-display-element")[0];
-      body.style.backgroundImage = backgroundImage;
-      body.style.backgroundRepeat = backgroundRepeat;
-      body.style.backgroundPosition = backgroundPosition;
-  	body.style.backgroundSize = "700px 500px";
-	body.style.backgroundColor = "black";
+      body.style.backgroundImage = '';
+	  body.style.backgroundColor = 'black';
 
       // //Set the canvas background color
-      canvas.style.backgroundImage = backgroundImage;
-      canvas.style.backgroundRepeat = backgroundRepeat;
-      canvas.style.backgroundPosition = backgroundPosition;
-  	canvas.style.backgroundSize = "700px 500px";
-	canvas.style.backgroundColor = "black";
+      canvas.style.backgroundImage = '';
+	  canvas.style.backgroundColor = 'black';
       //--------Set up Canvas end-------
-	  
-	  
-	  	var size = ['<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 100px; width: 100px" src="',
-	'<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 80px; width: 80px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 60px; width: 60px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 40px; width: 40px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 20px; width: 20px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 0px; width: 0px" src="'];
-	  
-    	var l = size[s];
-    	var new_html = l+trial.stimulus+'"></img>';
-		console.log(new_html);
-	  
-    // var new_html = '<img src="'+trial.stimulus+'" id="jspsych-image-keyboard-response-stimulus"></img>';
+
+    var new_html = '<div id="jspsych-html-keyboard-response-fish-stimulus">'+trial.stimulus+'</div>';
 
     // add prompt
-    if (trial.prompt !== null){
+    if(trial.prompt !== null){
       new_html += trial.prompt;
     }
 
@@ -151,7 +119,7 @@ jsPsych.plugins["rod-fixing"] = (function() {
 
       // after a valid response, the stimulus will have the CSS class 'responded'
       // which can be used to provide visual feedback that a response was recorded
-      display_element.querySelector('#jspsych-rod-fixing').className += ' responded';
+      display_element.querySelector('#jspsych-html-keyboard-response-fish-stimulus').className += ' responded';
 
       // only record the first response
       if (response.key == null) {
@@ -177,7 +145,7 @@ jsPsych.plugins["rod-fixing"] = (function() {
     // hide stimulus if stimulus_duration is set
     if (trial.stimulus_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#jspsych-rod-fixing').style.visibility = 'hidden';
+        display_element.querySelector('#jspsych-html-keyboard-response-fish-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
     }
 

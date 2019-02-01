@@ -1,12 +1,14 @@
 
 jsPsych.plugins["rod-fixing-l"] = (function() {
+	
+// seperate plugins made for rod fixing in low environment because variable l cannot be used again
 
   var plugin = {};
 
-  jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
+  jsPsych.pluginAPI.registerPreload('rod-fixing-l', 'stimulus', 'image');
 
   plugin.info = {
-    name: 'image-keyboard-response',
+    name: 'rod-fixing-l',
     description: '',
     parameters: {
       stimulus: {
@@ -83,21 +85,23 @@ jsPsych.plugins["rod-fixing-l"] = (function() {
       body.style.backgroundRepeat = backgroundRepeat;
       body.style.backgroundPosition = backgroundPosition;
   	body.style.backgroundSize = "700px 500px";
+	body.style.backgroundColor = "black";
 
       // //Set the canvas background color
       canvas.style.backgroundImage = backgroundImage;
       canvas.style.backgroundRepeat = backgroundRepeat;
       canvas.style.backgroundPosition = backgroundPosition;
   	canvas.style.backgroundSize = "700px 500px";
+	canvas.style.backgroundColor = "black";
       //--------Set up Canvas end-------
 	  
 	  
-	  	var size = ['<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 100px; width: 100px" src="',
-	'<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 80px; width: 80px" src="',
-	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" src="',
-	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 40px; width: 40px" src="',
-	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 20px; width: 20px" src="',
-	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 370px; right: 460px; height: 0px; width: 0px" src="'];
+	  	var size = ['<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 100px; width: 100px" src="',
+	'<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 80px; width: 80px" src="',
+	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 60px; width: 60px" src="',
+	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 40px; width: 40px" src="',
+	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 20px; width: 20px" src="',
+	  '<img id="jspsych-rod-fixing-l" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 0px; width: 0px" src="'];
 	  
     	var l = size[n];
     	var new_html = l+trial.stimulus+'"></img>';

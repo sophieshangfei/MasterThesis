@@ -108,17 +108,20 @@ jsPsych.plugins['fishing-looping'] = (function() {
     body.style.backgroundImage = backgroundImage;
     body.style.backgroundRepeat = backgroundRepeat;
     body.style.backgroundPosition = backgroundPosition;
-	body.style.backgroundSize = "700px 500px";
+	body.style.backgroundSize = "900px 650px";
+	body.style.backgroundColor = "black";
 
     // //Set the canvas background color
     canvas.style.backgroundImage = backgroundImage;
     canvas.style.backgroundRepeat = backgroundRepeat;
     canvas.style.backgroundPosition = backgroundPosition;
-	canvas.style.backgroundSize = "700px 500px";
+	canvas.style.backgroundSize = "900px 650px";
+	canvas.style.backgroundColor = "black";
     //--------Set up Canvas end-------
     
-	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
+	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 55%; left: 66%; transform: translate(-55%, -66%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
 	// style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300"
+	// top: 55%; left: 63%; transform: translate(-55%, -63%);
     
 	// if prompt is set, show prompt
     if (trial.prompt !== null) {
@@ -178,7 +181,7 @@ jsPsych.plugins['fishing-looping'] = (function() {
     function doFeedback(correct) {
 
         if (trial.show_stim_with_feedback) {
-          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 370px; right: 460px; height: 60px; width: 60px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
+          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 55%; left: 66%; transform: translate(-55%, -66%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
         }
 		
 

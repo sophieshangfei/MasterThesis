@@ -86,12 +86,14 @@ jsPsych.plugins['max_keyboard'] = (function(){
       body.style.backgroundImage = backgroundImage;
       body.style.backgroundRepeat = backgroundRepeat;
 	  body.style.backgroundPosition = backgroundPosition;
+	  body.style.backgroundColor = "black";
 	 // //Set the canvas background image
       canvas.style.backgroundImage = backgroundImage;
       canvas.style.backgroundRepeat = backgroundRepeat;
 	  canvas.style.backgroundPosition = backgroundPosition;
 	  body.style.backgroundSize = "700px 500px";
 	  canvas.style.backgroundSize = "700px 500px";
+	  canvas.style.backgroundColor = "black";
       //--------Set up Canvas end-------
 	  	  
       var trial_data = {};
