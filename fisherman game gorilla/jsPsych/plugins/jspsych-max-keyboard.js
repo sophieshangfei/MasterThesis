@@ -73,6 +73,7 @@ jsPsych.plugins['max_keyboard'] = (function(){
   plugin.trial = function(display_element, trial) {
 	  
 	  display_element.innerHTML = '';
+	  console.log(trial.trial_duration);
 	  
       // // set background
       var backgroundImage = trial.background;

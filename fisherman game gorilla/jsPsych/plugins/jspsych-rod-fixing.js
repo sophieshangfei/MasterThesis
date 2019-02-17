@@ -82,24 +82,25 @@ jsPsych.plugins["rod-fixing"] = (function() {
       body.style.backgroundImage = backgroundImage;
       body.style.backgroundRepeat = backgroundRepeat;
       body.style.backgroundPosition = backgroundPosition;
-  	body.style.backgroundSize = "700px 500px";
+  	body.style.backgroundSize = "1100px 800px";
 	body.style.backgroundColor = "black";
 
       // //Set the canvas background color
       canvas.style.backgroundImage = backgroundImage;
       canvas.style.backgroundRepeat = backgroundRepeat;
       canvas.style.backgroundPosition = backgroundPosition;
-  	canvas.style.backgroundSize = "700px 500px";
+  	canvas.style.backgroundSize = "1100px 800px";
 	canvas.style.backgroundColor = "black";
       //--------Set up Canvas end-------
 	  
 	  
-	  	var size = ['<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 100px; width: 100px" src="',
-	'<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 80px; width: 80px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 60px; width: 60px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 40px; width: 40px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 20px; width: 20px" src="',
-	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-55%, -63%); height: 0px; width: 0px" src="'];
+	  	var size = ['<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 130px; width: 130px" src="',
+	'<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 117px; width: 117px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 105px; width: 105px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95px; width: 95px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 86px; width: 86px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 78px; width: 78px" src="',
+'<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-50%, -50%); height: 0px; width: 0px" src="'];
 	  
     	var l = size[s];
     	var new_html = l+trial.stimulus+'"></img>';

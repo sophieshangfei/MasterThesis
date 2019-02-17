@@ -25,8 +25,8 @@ jsPsych.plugins['fishing-looping'] = (function() {
         array: true,
         description: 'The keys the subject is allowed to press to respond to the stimulus.'
       },
-          fished_feedback: {
-      type: jsPsych.plugins.parameterType.IMAGE,
+      fished_feedback: {
+      	  type: jsPsych.plugins.parameterType.IMAGE,
           pretty_name: 'feedback',
           default: undefined,
           description: 'The image content to be displayed.'
@@ -99,7 +99,6 @@ jsPsych.plugins['fishing-looping'] = (function() {
     var backgroundImage = trial.background;
     var backgroundRepeat = trial.background_spec_repeat;
     var backgroundPosition = trial.background_spec_position;
-    var price = trial.price;
     // //--------Set up Canvas begin-------
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
@@ -108,30 +107,41 @@ jsPsych.plugins['fishing-looping'] = (function() {
     body.style.backgroundImage = backgroundImage;
     body.style.backgroundRepeat = backgroundRepeat;
     body.style.backgroundPosition = backgroundPosition;
-	body.style.backgroundSize = "900px 650px";
+	body.style.backgroundSize = "1100px 800px";
 	body.style.backgroundColor = "black";
 
     // //Set the canvas background color
     canvas.style.backgroundImage = backgroundImage;
     canvas.style.backgroundRepeat = backgroundRepeat;
     canvas.style.backgroundPosition = backgroundPosition;
-	canvas.style.backgroundSize = "900px 650px";
+	canvas.style.backgroundSize = "1100px 800px";
 	canvas.style.backgroundColor = "black";
     //--------Set up Canvas end-------
     
-	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 55%; left: 66%; transform: translate(-55%, -66%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
+	//display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: relative; top: 55%; left: 86%; transform: translate(-55%, -86%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
+	console.log(trial.trial_duration);
+	// start recording the time
+	var startTime = (new Date()).getTime();
+	
+	display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 120px; width: 120px" class="jspsych-fishing-looping" src="'+trial.stimulus+'"></img>';
 	// style= "position: absolute; top: 350px; right: 450px; height: 225; width: 300"
 	// top: 55%; left: 63%; transform: translate(-55%, -63%);
     
 	// if prompt is set, show prompt
+
     if (trial.prompt !== null) {
       display_element.innerHTML += trial.prompt;
     }
-
+	
+	// save data
     var trial_data = {};
 
     // create response function
     var after_response = function(info) {
+		
+	// measure RT
+    var endTime = (new Date()).getTime();
+    var response_time = endTime - startTime;
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
@@ -146,18 +156,20 @@ jsPsych.plugins['fishing-looping'] = (function() {
 
       // save data
       trial_data = {
-        "rt": info.rt,
+        "rt": response_time,
+		"rt_builtin": info.rt,
+		"end_time": endTime,
         "correct": correct,
         "stimulus": trial.stimulus,
-        "key_press": info.key
+        "key_press": info.key,
+		"start_time": startTime
       };
 
       display_element.innerHTML = '';
-
-      doFeedback(correct);
+      
+	  var timeout = info.rt == null;
+      doFeedback(correct, timeout);
     }
-
-
 
     jsPsych.pluginAPI.getKeyboardResponse({
       callback_function: after_response,
@@ -178,12 +190,14 @@ jsPsych.plugins['fishing-looping'] = (function() {
 
 
 
-    function doFeedback(correct) {
-
-        if (trial.show_stim_with_feedback) {
-          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 55%; left: 66%; transform: translate(-55%, -66%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
+    function doFeedback(correct, timeout) {
+        if (timeout && !trial.show_feedback_on_timeout) {
+          display_element.innerHTML = "";
+        } else {
+			if (trial.show_stim_with_feedback) {
+          display_element.innerHTML = '<img id="jspsych-fishing-looping" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 90px; width: 90px" class="jspsych-fishing-looping" src="'+trial.fished_feedback+'"></img>';
         }
-		
+	}
 
       if (trial.force_correct_button_press && correct === false && ((timeout && trial.show_feedback_on_timeout) || !timeout)) {
         	var after_forced_response = function(info) {
@@ -193,7 +207,7 @@ jsPsych.plugins['fishing-looping'] = (function() {
         	jsPsych.pluginAPI.getKeyboardResponse({
           	  callback_function: after_forced_response,
           	  valid_responses: [trial.key_answer],
-          	  rt_method: 'performance',
+          	  rt_method: 'date',
           	  persist: false,
           	  allow_held_key: false
         	});

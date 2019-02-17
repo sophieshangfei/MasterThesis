@@ -185,7 +185,7 @@ jsPsych.plugins['categorize-html'] = (function() {
 
         // show the feedback
         display_element.innerHTML += atext;
-      }
+      } // bracket for else clause
       // check if force correct button press is set
       if (trial.force_correct_button_press && correct === false && ((timeout && trial.show_feedback_on_timeout) || !timeout)) {
 
@@ -207,7 +207,7 @@ jsPsych.plugins['categorize-html'] = (function() {
         }, trial.feedback_duration);
       }
 
-    }
+    } // bracket for doFeedback function
 
     function endTrial() {
       display_element.innerHTML = '';
