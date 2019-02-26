@@ -74,8 +74,10 @@ jsPsych.plugins["html-keyboard-response-fish"] = (function() {
       //--------Set up Canvas end-------
 
     var new_html = '<div id="jspsych-html-keyboard-response-fish-stimulus">'+trial.stimulus+'</div>';
-
-    // add prompt
+	
+	var startTime = (new Date()).getTime();
+    
+	// add prompt
     if(trial.prompt !== null){
       new_html += trial.prompt;
     }
@@ -88,6 +90,9 @@ jsPsych.plugins["html-keyboard-response-fish"] = (function() {
       rt: null,
       key: null
     };
+	
+	var endTime;
+	var response_time;
 
     // function to end trial when it is time
     var end_trial = function() {
@@ -102,10 +107,13 @@ jsPsych.plugins["html-keyboard-response-fish"] = (function() {
 
       // gather the data to store for the trial
       var trial_data = {
-        "rt": response.rt,
-        "stimulus": trial.stimulus,
-        "key_press": response.key
-      };
+		  "rt": response_time,
+		  "rt_builtin": response.rt,
+		  "end_time": endTime,
+		  "stimulus": trial.stimulus,
+       	  "key_press": response.key,
+		  "start_time": startTime
+     };
 
       // clear the display
       display_element.innerHTML = '';
@@ -125,6 +133,19 @@ jsPsych.plugins["html-keyboard-response-fish"] = (function() {
       if (response.key == null) {
         response = info;
       }
+	  
+    	// measure RT
+    	response.end_time = endTime;
+    	response.start_time = startTime;
+	
+          // only record the responded trial
+          if (info.key == null) {
+            	endTime = null;
+    		response_time = null;
+          } else {
+          	endTime = (new Date()).getTime();
+    		response_time = endTime - startTime;
+          }
 
       if (trial.response_ends_trial) {
         end_trial();

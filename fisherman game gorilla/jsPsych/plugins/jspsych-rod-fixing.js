@@ -92,7 +92,7 @@ jsPsych.plugins["rod-fixing"] = (function() {
   	canvas.style.backgroundSize = "1100px 800px";
 	canvas.style.backgroundColor = "black";
       //--------Set up Canvas end-------
-	  
+	  var startTime = (new Date()).getTime();
 	  
 	  	var size = ['<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 130px; width: 130px" src="',
 	'<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 117px; width: 117px" src="',
@@ -100,6 +100,8 @@ jsPsych.plugins["rod-fixing"] = (function() {
 	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95px; width: 95px" src="',
 	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 86px; width: 86px" src="',
 	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 78px; width: 78px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 70px; width: 70px" src="',
+	  '<img id="jspsych-rod-fixing" style= "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 63px; width: 63px" src="',
 '<img id="jspsych-rod-fixing" style= "position: absolute; top: 55%; left: 63%; transform: translate(-50%, -50%); height: 0px; width: 0px" src="'];
 	  
     	var l = size[s];
@@ -121,6 +123,9 @@ jsPsych.plugins["rod-fixing"] = (function() {
       rt: null,
       key: null
     };
+	
+	var endTime;
+	var response_time;
 
     // function to end trial when it is time
     var end_trial = function() {
@@ -135,9 +140,12 @@ jsPsych.plugins["rod-fixing"] = (function() {
 
       // gather the data to store for the trial
       var trial_data = {
-        "rt": response.rt,
-        "stimulus": trial.stimulus,
-        "key_press": response.key
+		  "rt": response_time,
+		  "rt_builtin": response.rt,
+		  "end_time": endTime,
+		  "stimulus": trial.stimulus,
+       	  "key_press": response.key,
+		  "start_time": startTime
       };
 
       // clear the display
@@ -158,6 +166,19 @@ jsPsych.plugins["rod-fixing"] = (function() {
       if (response.key == null) {
         response = info;
       }
+	  
+  	// measure RT
+  	response.end_time = endTime;
+  	response.start_time = startTime;
+	
+        // only record the responded trial
+        if (info.key == null) {
+          	endTime = null;
+  		response_time = null;
+        } else {
+        	endTime = (new Date()).getTime();
+  		response_time = endTime - startTime;
+        }
 
       if (trial.response_ends_trial) {
         end_trial();

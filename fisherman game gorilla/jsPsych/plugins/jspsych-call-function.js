@@ -31,6 +31,8 @@ jsPsych.plugins['call-function'] = (function() {
   }
 
   plugin.trial = function(display_element, trial) {
+	var startTime = (new Date()).getTime();
+	console.log(startTime);
     trial.post_trial_gap = 0;
     var return_val;
 

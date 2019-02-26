@@ -128,10 +128,15 @@ jsPsych.plugins['fishing-looping'] = (function() {
 	// top: 55%; left: 63%; transform: translate(-55%, -63%);
     
 	// if prompt is set, show prompt
-
     if (trial.prompt !== null) {
       display_element.innerHTML += trial.prompt;
     }
+	
+	// response data
+	var response = {
+		end_time: null,
+		start_time: null
+	}
 	
 	// save data
     var trial_data = {};
@@ -139,36 +144,47 @@ jsPsych.plugins['fishing-looping'] = (function() {
     // create response function
     var after_response = function(info) {
 		
-	// measure RT
-    var endTime = (new Date()).getTime();
-    var response_time = endTime - startTime;
+		// measure RT
+    	var endTime;
+		response.end_time = endTime;
+		response.start_time = startTime;
+    	var response_time;
+		
+        // only record the responded trial
+        if (info.key == null) {
+          	endTime = null;
+			response_time = null;
+        } else {
+        	endTime = (new Date()).getTime();
+			response_time = endTime - startTime;
+        }
 
-      // kill any remaining setTimeout handlers
-      jsPsych.pluginAPI.clearAllTimeouts();
+        // kill any remaining setTimeout handlers
+        jsPsych.pluginAPI.clearAllTimeouts();
 
-      // clear keyboard listener
-      jsPsych.pluginAPI.cancelAllKeyboardResponses();
+        // clear keyboard listener
+        jsPsych.pluginAPI.cancelAllKeyboardResponses();
 
-      var correct = false;
-      if (trial.key_answer == info.key) {
-        correct = true;
-      }
+        var correct = false;
+        if (trial.key_answer == info.key) {
+        	correct = true;
+        }
 
-      // save data
-      trial_data = {
-        "rt": response_time,
-		"rt_builtin": info.rt,
-		"end_time": endTime,
-        "correct": correct,
-        "stimulus": trial.stimulus,
-        "key_press": info.key,
-		"start_time": startTime
+       // save data
+       trial_data = {
+       		"rt": response_time,
+			"rt_builtin": info.rt,
+			"end_time": endTime,
+        	"correct": correct,
+        	"stimulus": trial.stimulus,
+        	"key_press": info.key,
+			"start_time": startTime
       };
 
-      display_element.innerHTML = '';
+      	display_element.innerHTML = '';
       
-	  var timeout = info.rt == null;
-      doFeedback(correct, timeout);
+	  	var timeout = info.rt == null;
+      	doFeedback(correct, timeout);
     }
 
     jsPsych.pluginAPI.getKeyboardResponse({
@@ -183,7 +199,9 @@ jsPsych.plugins['fishing-looping'] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         after_response({
           key: null,
-          rt: null
+          rt: null,
+		  end_time: null,
+		  key_press: null
         });
       }, trial.trial_duration);
     }
