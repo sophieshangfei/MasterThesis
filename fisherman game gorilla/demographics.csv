@@ -1,0 +1,226 @@
+,id,question,response
+1,621711.0,age-1,18
+2,621711.0,gender-1,Male
+3,621711.0,gender-1-quantised,2
+4,621711.0,handedness-1,Right-handed
+5,621711.0,handedness-1-quantised,1
+6,621711.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+7,621711.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+10,621725.0,age-1,18
+11,621725.0,gender-1,Female
+12,621725.0,gender-1-quantised,1
+13,621725.0,handedness-1,Right-handed
+14,621725.0,handedness-1-quantised,1
+15,621725.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+16,621725.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+19,621729.0,age-1,18
+20,621729.0,gender-1,Male
+21,621729.0,gender-1-quantised,2
+22,621729.0,handedness-1,Left-handed
+23,621729.0,handedness-1-quantised,2
+24,621729.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+25,621729.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+28,621733.0,age-1,18
+29,621733.0,gender-1,Male
+30,621733.0,gender-1-quantised,2
+31,621733.0,handedness-1,Right-handed
+32,621733.0,handedness-1-quantised,1
+33,621733.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+34,621733.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+37,621735.0,age-1,18
+38,621735.0,gender-1,Female
+39,621735.0,gender-1-quantised,1
+40,621735.0,handedness-1,Right-handed
+41,621735.0,handedness-1-quantised,1
+42,621735.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+43,621735.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+46,621734.0,age-1,18
+47,621734.0,gender-1,Male
+48,621734.0,gender-1-quantised,2
+49,621734.0,handedness-1,Left-handed
+50,621734.0,handedness-1-quantised,2
+51,621734.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+52,621734.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+55,621738.0,age-1,18
+56,621738.0,gender-1,Male
+57,621738.0,gender-1-quantised,2
+58,621738.0,handedness-1,Right-handed
+59,621738.0,handedness-1-quantised,1
+60,621738.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+61,621738.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+64,621749.0,age-1,18
+65,621749.0,gender-1,Female
+66,621749.0,gender-1-quantised,1
+67,621749.0,handedness-1,Right-handed
+68,621749.0,handedness-1-quantised,1
+69,621749.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+70,621749.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+73,621753.0,age-1,18
+74,621753.0,gender-1,Male
+75,621753.0,gender-1-quantised,2
+76,621753.0,handedness-1,Right-handed
+77,621753.0,handedness-1-quantised,1
+78,621753.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+79,621753.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+82,621762.0,age-1,18
+83,621762.0,gender-1,Male
+84,621762.0,gender-1-quantised,2
+85,621762.0,handedness-1,Right-handed
+86,621762.0,handedness-1-quantised,1
+87,621762.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+88,621762.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+91,621759.0,age-1,18
+92,621759.0,gender-1,Female
+93,621759.0,gender-1-quantised,1
+94,621759.0,handedness-1,Right-handed
+95,621759.0,handedness-1-quantised,1
+96,621759.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+97,621759.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+100,621761.0,age-1,18
+101,621761.0,gender-1,Male
+102,621761.0,gender-1-quantised,2
+103,621761.0,handedness-1,Ambidextrous
+104,621761.0,handedness-1-quantised,3
+105,621761.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+106,621761.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+109,621770.0,age-1,18
+110,621770.0,gender-1,Female
+111,621770.0,gender-1-quantised,1
+112,621770.0,handedness-1,Right-handed
+113,621770.0,handedness-1-quantised,1
+114,621770.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+115,621770.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+118,621775.0,age-1,18
+119,621775.0,gender-1,Female
+120,621775.0,gender-1-quantised,1
+121,621775.0,handedness-1,Right-handed
+122,621775.0,handedness-1-quantised,1
+123,621775.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+124,621775.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+127,621772.0,age-1,18
+128,621772.0,gender-1,Female
+129,621772.0,gender-1-quantised,1
+130,621772.0,handedness-1,Right-handed
+131,621772.0,handedness-1-quantised,1
+132,621772.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+133,621772.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+136,621774.0,age-1,18
+137,621774.0,gender-1,Female
+138,621774.0,gender-1-quantised,1
+139,621774.0,handedness-1,Right-handed
+140,621774.0,handedness-1-quantised,1
+141,621774.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+142,621774.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+145,621785.0,age-1,18
+146,621785.0,gender-1,Female
+147,621785.0,gender-1-quantised,1
+148,621785.0,handedness-1,Right-handed
+149,621785.0,handedness-1-quantised,1
+150,621785.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+151,621785.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+154,621789.0,age-1,18
+155,621789.0,gender-1,Male
+156,621789.0,gender-1-quantised,2
+157,621789.0,handedness-1,Right-handed
+158,621789.0,handedness-1-quantised,1
+159,621789.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+160,621789.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+163,625389.0,age-1,18
+164,625389.0,gender-1,Female
+165,625389.0,gender-1-quantised,1
+166,625389.0,handedness-1,Right-handed
+167,625389.0,handedness-1-quantised,1
+168,625389.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+169,625389.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+172,625386.0,age-1,18
+173,625386.0,gender-1,Female
+174,625386.0,gender-1-quantised,1
+175,625386.0,handedness-1,Right-handed
+176,625386.0,handedness-1-quantised,1
+177,625386.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+178,625386.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+181,625385.0,age-1,19
+182,625385.0,gender-1,Male
+183,625385.0,gender-1-quantised,2
+184,625385.0,handedness-1,Right-handed
+185,625385.0,handedness-1-quantised,1
+186,625385.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+187,625385.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+190,625394.0,age-1,18
+191,625394.0,gender-1,Male
+192,625394.0,gender-1-quantised,2
+193,625394.0,handedness-1,Right-handed
+194,625394.0,handedness-1-quantised,1
+195,625394.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+196,625394.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+199,625392.0,age-1,18
+200,625392.0,gender-1,Female
+201,625392.0,gender-1-quantised,1
+202,625392.0,handedness-1,Right-handed
+203,625392.0,handedness-1-quantised,1
+204,625392.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+205,625392.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+208,625403.0,age-1,18
+209,625403.0,gender-1,Female
+210,625403.0,gender-1-quantised,1
+211,625403.0,handedness-1,Left-handed
+212,625403.0,handedness-1-quantised,2
+213,625403.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+214,625403.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+217,625395.0,age-1,18
+218,625395.0,gender-1,Male
+219,625395.0,gender-1-quantised,2
+220,625395.0,handedness-1,Right-handed
+221,625395.0,handedness-1-quantised,1
+222,625395.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+223,625395.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+226,625404.0,age-1,18
+227,625404.0,gender-1,Male
+228,625404.0,gender-1-quantised,2
+229,625404.0,handedness-1,Right-handed
+230,625404.0,handedness-1-quantised,1
+231,625404.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+232,625404.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+235,625406.0,age-1,18
+236,625406.0,gender-1,Male
+237,625406.0,gender-1-quantised,2
+238,625406.0,handedness-1,Ambidextrous
+239,625406.0,handedness-1-quantised,3
+240,625406.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+241,625406.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+244,625410.0,age-1,18
+245,625410.0,gender-1,Male
+246,625410.0,gender-1-quantised,2
+247,625410.0,handedness-1,Right-handed
+248,625410.0,handedness-1-quantised,1
+249,625410.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+250,625410.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+253,625408.0,age-1,18
+254,625408.0,gender-1,Female
+255,625408.0,gender-1-quantised,1
+256,625408.0,handedness-1,Right-handed
+257,625408.0,handedness-1-quantised,1
+258,625408.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+259,625408.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+262,625411.0,age-1,18
+263,625411.0,gender-1,Male
+264,625411.0,gender-1-quantised,2
+265,625411.0,handedness-1,Right-handed
+266,625411.0,handedness-1-quantised,1
+267,625411.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+268,625411.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+271,625416.0,age-1,18
+272,625416.0,gender-1,Male
+273,625416.0,gender-1-quantised,2
+274,625416.0,handedness-1,Right-handed
+275,625416.0,handedness-1-quantised,1
+276,625416.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+277,625416.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+280,625431.0,age-1,18
+281,625431.0,gender-1,Male
+282,625431.0,gender-1-quantised,2
+283,625431.0,handedness-1,Right-handed
+284,625431.0,handedness-1-quantised,1
+285,625431.0,confirmation-1-1,I do not have any psychiatric or neurological disorders
+286,625431.0,confirmation-1-2,I am not taking any medications for psychiatric disorders
+288,,,
