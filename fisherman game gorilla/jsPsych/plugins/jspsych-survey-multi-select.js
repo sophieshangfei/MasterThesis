@@ -32,6 +32,9 @@ jsPsych.plugins['survey-multi-select'] = (function() {
                         pretty_name: 'Horizontal',
                         default: false,
                         description: 'If true, then questions are centered and options are displayed horizontally.'},
+			  index: {type: jsPsych.plugins.parameterType.STRING,
+				  pretty_name: 'index',
+				  default: undefined}
         }
       },
       required: {
@@ -55,6 +58,7 @@ jsPsych.plugins['survey-multi-select'] = (function() {
     }
   }
   plugin.trial = function(display_element, trial) {
+	  var trial.index = d;
     var plugin_id_name = "jspsych-survey-multi-select";
     var plugin_id_selector = '#' + plugin_id_name;
     var _join = function( /*args*/ ) {
