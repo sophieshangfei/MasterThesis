@@ -111,7 +111,7 @@ jsPsych.plugins['html-slider-response'] = (function() {
     }
 
     // add submit button
-    html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn">'+trial.button_label+'</button>';
+    html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" style= "color: blue">'+trial.button_label+'</button>';
 
     display_element.innerHTML = html;
 
