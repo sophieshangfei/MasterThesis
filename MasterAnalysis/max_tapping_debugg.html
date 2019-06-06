@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jsPsych/jspsych.js"></script>
+	<script src="jsPsych/plugins/jspsych-max-keyboard.js"></script>
+	<script src="jsPsych/plugins/jspsych-call-function.js"></script>
+    <link rel="stylesheet" href="jsPsych/css/jspsych.css"></link>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css">
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <style>
+	  html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+	  #jspsych-target { width: 100%; height: 100%;}
+	  #tap { background-color: #ADFF2F; margin: 0; text-align: center; display: none; position: absolute; width: 60px; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+	  #tap .tap-top {display: inline-block; font-family: 'Open Sans', 'Arial'; font-size: 26px; color: black;}
+
+	  #high { background-color: black; margin: 0; text-align: center; display: none; position: absolute; width: 350px; top: 20%; left: 50%; transform: translate(-50%, -50%);}
+	  #high .high-top {display: inline-block; font-family: 'Open Sans', 'Arial'; font-size: 16px; color: white;}
+    </style>
+  </head>
+  <body>
+<div id="tap">
+    <span class="tap-top"><span id="tap-times">0</span></span>
+</div>
+
+<!-- <div id="high">
+   <span class="high-top">Round finished - you scored: <span id="highest">0</span></span>
+</div> -->
+
+<div id="high">
+   <span class="high-top">Round finished - you scored: </span>
+</div>
+	  
+     <div id="jspsych-target"></div>
+  </body>
+  <script>
+  
+	  var tap;
+	  var tap_time = 5000;
+	  var n_tap = 3;
+	  var timeline = [];
+	  
+	  var show_tap = {
+	  	    type: 'call-function',
+	  	    func: function(){
+	  	        $('#tap')[0].style.display = 'inline';
+	  	    }
+	  	}
+	  	timeline.push(show_tap);
+
+		var max_tapping = {
+			type: 'max_keyboard',
+			key_answer: 40,
+			choices: [40],
+			background: 'url(img/tap.png)',
+			background_spec_repeat: 'no-repeat',
+			background_spec_position: 'center center',
+			on_finish: function(data){
+	    		  if (data.key_press == 40){
+	    			  tap = tap + 1;
+	    			  $('#tap-times')[0].innerHTML = tap;
+	    		  }
+	    	  }
+	  	  };
+		  
+		  
+		  var start_tap;
+		  var tap_lst = [];
+		  
+    for(var i=0; i<n_tap; i++){
+
+		var count_start = {
+			type: 'call-function',
+	        func: function(){
+				var t = new Date();
+				start_tap = t.getTime();
+				tap = 0;
+				$('#tap-times')[0].innerHTML = tap;
+			}
+		}
+	  	  
+	   	  var tap_node = {
+	   	    timeline: [max_tapping],
+	   	    loop_function: function(data){
+	   	      if(Date.now() - start_tap < tap_time){
+	   	        return true;
+	   	      } else {
+		  		tap_lst.push(tap);
+		  		console.log(tap_lst);
+	   	        return false;
+	   	      }
+	   	    }
+	   	  }
+	   	  timeline.push(count_start, tap_node);
+	  }
+	  
+	  var show_max = {
+		  type: 'call-function',
+		  func: function(){
+			   	$('#high')[0].style.display = 'block';
+ 	        }
+ 	    }
+		
+ 	  timeline.push(show_max);
+	  var max;
+	  var max_tap = {
+		type: 'call-function',
+        func: function(){
+			max = Math.max.apply(null, tap_lst);
+			console.log(max);
+			$('#tap-times')[0].innerHTML = max;
+		}
+	}
+	timeline.push(max_tap);
+	  
+	
+
+	  jsPsych.init({
+	  	display_element: 'jspsych-target',
+	    timeline: timeline,
+	    on_finish: function(){jsPsych.data.displayData();}
+	  });
+
+	  </script>
+</html>
